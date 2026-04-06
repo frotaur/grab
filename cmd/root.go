@@ -39,7 +39,7 @@ Examples:
 func init() {
 	rootCmd.Flags().IntVarP(&maxTokens, "tokens", "t", 0, "truncate output to approximately this many tokens (0 = no limit)")
 	rootCmd.Flags().BoolVarP(&listLinks, "list", "l", false, "list links found on the page instead of content")
-	rootCmd.Flags().BoolVarP(&rawMode, "raw", "r", false, "output raw extracted text without cleaning")
+	rootCmd.Flags().BoolVarP(&rawMode, "raw", "r", false, "output raw HTML instead of extracted text")
 	rootCmd.Flags().BoolVar(&noCache, "no-cache", false, "bypass the local cache")
 	rootCmd.Flags().StringVar(&userAgent, "user-agent", "grab/1.0 (headless web reader)", "HTTP User-Agent header")
 }
@@ -72,6 +72,12 @@ func run(cmd *cobra.Command, args []string) error {
 			fmt.Fprintf(os.Stdout, "%s\n  %s\n", link.Text, link.URL)
 		}
 		return nil
+	}
+
+	// Raw mode: just dump the HTML
+	if rawMode {
+		_, err = io.WriteString(os.Stdout, html)
+		return err
 	}
 
 	// Extract content
