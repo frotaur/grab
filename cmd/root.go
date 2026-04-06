@@ -74,8 +74,11 @@ func run(cmd *cobra.Command, args []string) error {
 		return nil
 	}
 
-	// Raw mode: just dump the HTML
+	// Raw mode: dump the HTML (with optional token limiting)
 	if rawMode {
+		if maxTokens > 0 {
+			html = truncateToTokens(html, maxTokens)
+		}
 		_, err = io.WriteString(os.Stdout, html)
 		return err
 	}
