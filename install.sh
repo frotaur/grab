@@ -3,7 +3,7 @@
 set -e
 
 REPO="frotaur/grab"
-VERSION="${VERSION:-latest}"
+VERSION="${VERSION:-v1.0.1}"
 INSTALL_DIR="${INSTALL_DIR:-$HOME/.local/bin}"
 
 # Colors (if terminal supports it)
@@ -35,14 +35,6 @@ case "$OS" in
 esac
 
 info "Installing grab for ${OS}/${ARCH}..."
-
-# Resolve latest version tag
-if [ "$VERSION" = "latest" ]; then
-    VERSION=$(curl -sfL "https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name"' | cut -d'"' -f4)
-    if [ -z "$VERSION" ]; then
-        fail "Could not determine latest version"
-    fi
-fi
 
 # Download the binary
 TARBALL="grab_${VERSION#v}_${OS}_${ARCH}.tar.gz"
