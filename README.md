@@ -21,7 +21,7 @@ grab --list https://docs.foo.com/api
 ## Install
 
 ```bash
-curl -sfL https://raw.githubusercontent.com/frotaur/grab/main/install.sh | bash
+curl -sfL https://raw.githubusercontent.com/frotaur/grab/latest/install.sh | bash
 ```
 
 Or build from source (requires Go 1.21+):

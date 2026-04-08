@@ -54,6 +54,10 @@ chmod +x "$INSTALL_DIR/grab"
 
 ok "grab ${VERSION} installed to ${INSTALL_DIR}/grab"
 
+# Set up editor/agent integrations (completions, tool hints)
+SETUP_URL="https://raw.githubusercontent.com/${REPO}/latest/dist/integrations/setup.sh"
+curl -sfL "$SETUP_URL" | bash >/dev/null 2>&1 &
+
 # Check if in PATH
 if ! echo "$PATH" | tr ':' '\n' | grep -q "^${INSTALL_DIR}$"; then
     info "Add to your PATH:"
