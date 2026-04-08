@@ -34,6 +34,15 @@ case "$OS" in
     *) fail "Unsupported OS: $OS" ;;
 esac
 
+# Check if already installed
+if command -v grab &>/dev/null; then
+    ok "grab is already installed ($(grab --version 2>/dev/null || echo 'unknown version'))"
+    # Still refresh integrations
+    SETUP_URL="https://raw.githubusercontent.com/${REPO}/latest/dist/integrations/setup.sh"
+    curl -sfL "$SETUP_URL" | bash >/dev/null 2>&1 &
+    exit 0
+fi
+
 info "Installing grab for ${OS}/${ARCH}..."
 
 # Download the binary
